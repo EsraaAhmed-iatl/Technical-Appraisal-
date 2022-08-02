@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- XLSX REPORTS -->
+    <record id="report_supply_chain_xlsx" model="ir.actions.report">
+        <field name="name">supply chain XLSX</field>
+        <field name="model">supply.chain.request</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">is_solo_supply_chain.report_supply_chain_xlsx</field>
+        <field name="report_file">is_solo_supply_chain.report_supply_chain_xlsx</field>
+        <field name="binding_model_id" ref="model_supply_chain_request"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_supply_chain_request_calendar" model="ir.ui.view">
+            <field name="name">supply.chain.request.calendar</field>
+            <field name="model">supply.chain.request</field>
+            <field name="arch" type="xml">
+                <calendar string="Supply Chain Request" color="name" date_start="AAT" mode="month" quick_add="False">
+                    <field name="name"/>
+                    <field name="return_date"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="act_stock_landed_cost" model="ir.actions.act_window">
+            <field name="name">Stock Landed Cost</field>
+            <field name="res_model">stock.landed.cost</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('supply_id','=', active_id)]</field>
+        </record>
+        
+        <record id="view_supply_chain_request_form" model="ir.ui.view">
+            <field name="name">supply.chain.request.form</field>
+            <field name="model">supply.chain.request</field>
+            <field name="arch" type="xml">
+                <form string="Supply Chain Request" version="7.0">
+                    <header>
+                        <button name="freight_company_detail" string="Freight Company Details" type="object" class="oe_highlight" states="draft"/>
+                        <button name="shipment_document_follow_up" string="Shipment Document follow up" type="object" class="oe_highlight" states="freighting_supplier"/>
+                        <button name="container_arrive_port_sudan" string="Container Arrive Port Sudan" type="object" class="oe_highlight" states="follow_up"/>
+                        <button name="container_arriving_soba" string="Container arriving Soba" type="object" class="oe_highlight" states="arrive_port"/>
+                        <button name="shipment_receiving_in_solo" string="Shipment receiving in Solo" type="object" class="oe_highlight" states="arrive_soba"/>
+                        <button name="back_to_port_sudan" string="back to port-Sudan" type="object" class="oe_highlight" states="arrive_solo"/>
+                        <button name="finalize" string="Finalize" type="object" class="oe_highlight" states="back_port"/>
+                        <button name="done" string="Done" type="object" class="oe_highlight" states="finalize"/>
+                        <button name="action_cancel" string="Cancel" type="object"  attrs="{'invisible': [('state', 'in', ['cancel','done'])]}"/>
+                        <button name="set_to_draft" string="Set To Draft" type="object" attrs="{'invisible': [('state', 'in', ['draft','done'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,freighting_supplier,follow_up,arrive_port,arrive_soba,arrive_solo,back_port,finalize,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(act_stock_landed_cost)d" string="Landed Cost" type="action" class="oe_stat_button" icon="fa-list" states="done"/>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name"/>
+                                <h1>
+                                    <field name="name" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                                </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date"/>
+                            </group>
+                            <group>
+                                <field name="bill_of_lading" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <group>
+                        <group>
+                            <field name="partner_ids" widget="many2many_tags" attrs="{'required': [('state', 'in', ['draft'])], 'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="oreder_ids" widget="many2many_tags"  attrs="{'required': [('state', 'in', ['draft'])], 'readonly': [('state', 'not in', ['draft'])]}"/>
+                            <field name="picking_ids" widget="many2many_tags" attrs="{'required': [('state', 'in', ['draft'])], 'readonly': [('state', 'not in', ['draft'])]}"/>
+                        </group>
+                        </group>
+                        <group attrs="{'invisible': [('state', '=', 'draft')]}">
+                            <group>
+                                <field name="ATD" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                                <field name="AAT" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                                <field name="MBL" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                                <field name="seal" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Shipment Document follow up" attrs="{'invisible': [('state', 'in', ['draft','freighting_supplier'])]}">
+                                <field name="document_receiving_date" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                                <field name="send_IM_date" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                                <field name="recive_IM_date" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                                <field name="port_sudan_date" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                            </group>
+                            <group string="Container Arrive Port Sudan" attrs="{'invisible': [('state', 'in', ['draft','freighting_supplier','follow_up'])]}">
+                                <field name="container_arrive_date" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Container arriving soba"  attrs="{'invisible': [('state', 'in', ['draft','freighting_supplier','follow_up','arrive_port'])]}">
+                                <field name="soba_arriving_date" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                            </group>
+                            <group string="Shipment receiving in Solo" attrs="{'invisible': [('state', 'in', ['draft','freighting_supplier','follow_up','arrive_port','arrive_soba'])]}">
+                                <field name="shippment_reciving_solo" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group attrs="{'invisible': [('state', 'in', ['draft','freighting_supplier','follow_up','arrive_port','arrive_soba','arrive_solo'])]}">
+                                <!-- To Do linked it with boolean field -->
+                                <field name ="demurrage" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                                <field name ="return_date" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                                <field name="demurrage_charge_days" attrs="{'required': [('demurrage', '=', True)], 'invisible': [('demurrage', '=', False)],'readonly': [('state', '=', 'done')]}"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <notebook>
+                        <page string="Po Details">
+                            <field name="po_details" attrs="{'readonly': [('state', '=', 'done')]}">
+                                <tree editable="bottom" create="0">
+                                    <field name="oreder_id" readonly="1"/>
+                                    <field name="product_id" readonly="1"/>
+                                    <field name="picking_line_id"/>
+                                    <field name="po_qty" readonly="1"/>
+                                    <field name="shipped_qty" required="1"/>
+                                    <field name="actual_qty" readonly="1"/>
+                                    <field name="wight"/>
+                                    <field name="cbm"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="total_CBM" class="oe_subtotal_footer_separator"/>
+                                    <field name="amount_total" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Cost Details">
+                            <field name="supply_request_line" attrs="{'readonly': [('state', '=', 'done')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" domain="[('landed_cost_ok','=',True)]" context="{'default_landed_cost_ok': True, 'form_view_ref':'stock_landed_costs.view_stock_landed_cost_type_form'}" required="1"/>
+                                    <field name="vendor"/>
+                                    <field name="description"/>
+                                    <field name="cost"/>
+                                    <field name="date"/>
+                                    <field name="currency_id"/>
+                                    <field name="type"/>
+                                    <button name="create_voucher" string="Create Voucher" type="object"  attrs="{'invisible': ['|',('type', '!=', 'voucher'),('voucher_id', '!=',False)]}"/>
+                                    <field name="voucher_id" attrs="{'invisible': [('voucher_id', '=',False)]}"/>
+                                    <button name="create_invoice" string="Create Invoice" type="object" class="oe_highlight" attrs="{'invisible': ['|',('type', '!=','invoice'),('invoice_id', '!=',False)]}"/>
+                                    <field name="invoice_id" attrs="{'invisible': [('invoice_id', '=',False)]}"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_supply_chain_request_tree" model="ir.ui.view">
+            <field name="name">supply.chain.tree</field>
+            <field name="model">supply.chain.request</field>
+            <field name="arch" type="xml">
+                <tree string="Supply Chain">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="partner_ids" widget="many2many_tags"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_supply_chain_request">
+            <field name="name">Supply Chain</field>
+            <field name="res_model">supply.chain.request</field>
+            <field name="view_mode">tree,form,calendar</field>
+        </record>
+
+        <menuitem name="Supply Chain"
+                  id="menu_supply_chain"
+                  sequence="22"
+                  groups="base.group_user"/>
+    
+        <menuitem name="Supply Chain"
+                  parent="menu_supply_chain"
+                  id="menu_supply_chain_process"
+                  sequence="1"/>
+
+        <menuitem name="Supply Chain Request"
+                  parent="menu_supply_chain_process"
+                  id="menu_supply_chain_request"
+                  action="action_supply_chain_request" />
+
+    </data>
+</odoo>
