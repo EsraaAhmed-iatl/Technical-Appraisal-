@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Supply Chain Management",
+    'name': "Help Desk-Esraa Ahmed",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -17,7 +17,7 @@
     'category': 'Uncategorized',
     'version': '0.1',
     # any module necessary for this one to work correctly
-    'depends': ['base','mail', 'purchase', 'account', 'stock_landed_costs','is_solo_purchase','report_xlsx'],
+    'depends': ['base','report_xlsx'],
     # always loaded
     'data': [
         'security/ir.model.access.csv',
@@ -25,4 +25,3 @@
         'report/reports.xml',
     ],
 }
-git clone --branch Technical-Appraisal https://github.com/EsraaAhmed-iatl/Technical-Appraisal-.git
