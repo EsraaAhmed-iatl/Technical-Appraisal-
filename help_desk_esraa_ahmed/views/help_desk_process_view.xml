@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_hd_tickit" model="ir.actions.act_window">
+            <field name="name">Hd Ticket</field>
+            <field name="res_model">hd.ticket</field>
+            <field name="view_mode">kanban,tree,form</field>
+             <field name="help" type="html">
+              <p class="o_view_nocontent_empty_folder">
+                No module found!
+              </p>
+            </field>
+        </record>
+
+        <record id="kanban_hd_tickit" model="ir.ui.view">
+            <field name="name">hd tickit kanban</field>
+            <field name="model">hd.ticket</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div>
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div>
+                                    <span><field name="user_id"/>&amp;nbsp;<br/></span>
+                                </div>
+                                <span></span>   <div>
+                                    <span><field name="tag_ids"/>&amp;nbsp;<br/></span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_hd_tickit_view_tree" model="ir.ui.view">
+            <field name="name">Hd Ticket</field>
+            <field name="model">hd.ticket</field>
+            <field name="arch" type="xml">
+
+                <tree string="Hd Ticket" decoration-success="state == 'solved'" decoration-info="state == 'in_progress'" decoration-primary="state == 'draft'">
+                    <field name="name"/>
+                    <field name="time_submitted"/>
+                    <field name="user_id"/>
+                    <field name="user_id"/>
+                    <field name="priority" widget="priority"/>
+                    <field name="partner_id"/>
+                    <field name="customer_name"/>
+                    <field name="hosting_type"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="hd_tickit_view_form" model="ir.ui.view">
+            <field name="name">Hd Ticket form</field>
+            <field name="model">hd.ticket</field>
+            <field name="arch" type="xml">
+                <form string="Hd Ticket">
+                    <header>
+                        <button name="set_to_in_progress" string="In Progress" type="object" class="oe_highlight" states="draft"/>
+                        <button name="set_to_solved" string="Solved" type="object" class="oe_highlight" states="in_progress"/>
+                        <button name="action_cancel" string="Cancel" type="object"  attrs="{'invisible': [('state', 'in', ['cancel','done'])]}"/>
+                        <button name="set_to_draft" string="Set To Draft" type="object" attrs="{'invisible': [('state', 'not in', ['solved'])]}"/>
+                      <field name="state" widget="statusbar" options="{'clickable': '0'}"/>
+                    </header>
+<!--                        <button name="freight_company_detail" string="Freight Company Details" type="object" class="oe_highlight" states="draft"/>-->
+<!--                        <button name="shipment_document_follow_up" string="Shipment Document follow up" type="object" class="oe_highlight" states="freighting_supplier"/>-->
+                    <sheet>
+<!--                        <div class="oe_title">-->
+<!--                            <label for="name"/>-->
+<!--                                <h1>-->
+<!--                                    <field name="name" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>-->
+<!--                                </h1>-->
+<!--                        </div>-->
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="priority" widget="priority"/>
+                                <field name="tag_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="time_submitted"/>
+                                <field name="description" />
+                            </group>
+                        </group>
+                        <group>
+                            <field name="user_id" />
+                            <field name="partner_id" />
+                            <field name="customer_name" />
+                            <field name="customer_email" />
+                            <field name="customer_phone" />
+                            <field name="hosting_type" />
+                            <field name="server_url" attrs="{'invisible': [('hosting_type', '=', 'cloud')],'required': [('hosting_type', '=', 'premise')]}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

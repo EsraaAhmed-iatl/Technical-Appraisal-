@@ -1,27 +1,23 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Help Desk-Esraa Ahmed",
-
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
-
+        To manage Iatl-intellisoft Help Desk Process""",
     'description': """
-        to manage SoloClass freight
+        To manage Iatl-intellisoft
+         Help Desk Process
     """,
     'author': "Iatl-Intellisoft",
     'website': "http://www.iatlintellisoft-sd.com",
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
     'category': 'Uncategorized',
     'version': '0.1',
-    # any module necessary for this one to work correctly
     'depends': ['base','report_xlsx'],
-    # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/supply_chain_request.xml',
+        'security/security_groups.xml',
+        'views/help_desk_teams_view.xml',
+        'views/help_desk_process_view.xml',
+        'views/Menus.xml',
         'report/reports.xml',
     ],
 }

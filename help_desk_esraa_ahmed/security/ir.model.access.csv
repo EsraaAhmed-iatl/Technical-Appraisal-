@@ -1,6 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_supply_chain_line,supply.chain.line,model_supply_chain_line,purchase.group_purchase_manager,1,1,1,1
-access_supply_chain_request,supply chain request,model_supply_chain_request,purchase.group_purchase_manager,1,1,1,1
-access_supply_chain_request_line,supply chain request line,model_supply_chain_request_line,purchase.group_purchase_manager,1,1,1,1
-
-
+access_hd_team,hd.team,model_hd_team,base.group_user,1,1,1,1
+access_hd_ticket,hd.ticket,model_hd_ticket,base.group_user,1,1,1,1
+access_hd_tag,hd.tag,model_hd_tag,base.group_user,1,1,1,1

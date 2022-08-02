@@ -1,0 +1,52 @@
+<odoo>
+           <!--  Hd Main  Menues-->
+       <menuitem name ="Help Desk"
+              id="menu_hd_root"
+              web_icon="help_desk_esraa_ahmed,static/description/icon.png"
+              sequence="3"/>
+
+                <!--  Configuration  -->
+       <menuitem name ="Configuration"
+              id="menu_hd_configuration"
+              parent="menu_hd_root"
+              sequence="300"/>
+
+          <!--  Hd Main Process Menus  -->
+      <menuitem name ="Tickets"
+              id="menu_iatl_hd_Ticket"
+              parent="menu_hd_root"
+              groups="base.group_user"/>
+
+    <menuitem name ="My Tickets"
+              id="menu2_hd_Tickets"
+              parent="menu_iatl_hd_Ticket"
+              action="action_hd_tickit"
+              groups="help_desk_esraa_ahmed.group_my_tickit_user"/>
+
+    <menuitem name ="All Tickets"
+              id="tickit_menu"
+              parent="menu_iatl_hd_Ticket"
+              action="action_hd_tickit"/>
+
+                   <!--  teams-->
+    <menuitem name ="Teams"
+              id="menu_hd_team"
+              parent="menu_hd_configuration"/>
+
+    <menuitem name ="Hd Teams"
+              id="hd_team_menu"
+              parent="menu_hd_team"
+              action="action_Help_desk_team"/>
+
+               <!--    tags-->
+    <menuitem name ="Tags"
+              id="menu_parent_hd_tags"
+              parent="menu_hd_configuration"
+              sequence="10"/>
+
+    <menuitem name ="Hd Tagas"
+              id="ht_tag_menu"
+              parent="menu_parent_hd_tags"
+              action="action_Help_desk_tag"/>
+
+</odoo>

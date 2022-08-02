@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- XLSX REPORTS -->
-    <record id="report_supply_chain_xlsx" model="ir.actions.report">
-        <field name="name">supply chain XLSX</field>
-        <field name="model">supply.chain.request</field>
+    <record id="report_hd_tickit_xlsx" model="ir.actions.report">
+        <field name="name">Hd Ticket XLSX</field>
+        <field name="model">hd.ticket</field>
         <field name="report_type">xlsx</field>
-        <field name="report_name">is_solo_supply_chain.report_supply_chain_xlsx</field>
-        <field name="report_file">is_solo_supply_chain.report_supply_chain_xlsx</field>
-        <field name="binding_model_id" ref="model_supply_chain_request"/>
+        <field name="report_name">help_desk_esraa_ahmed.report_hd_tickit2_xlsx</field>
+        <field name="report_file">help_desk_esraa_ahmed.report_hd_tickit2_xlsx</field>
+        <field name="binding_model_id" ref="model_hd_ticket"/>
         <field name="binding_type">report</field>
     </record>
 </odoo>

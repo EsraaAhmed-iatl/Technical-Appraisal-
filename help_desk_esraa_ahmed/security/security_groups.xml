@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="module_hd_tickct" model="ir.module.category">
+            <field name="name">HD Tickits</field>
+            <field name="sequence">55</field>
+        </record>
+
+          <record id="group_my_tickit_user" model="res.groups">
+             <field name="name">My tickits</field>
+             <field name="category_id" ref="module_hd_tickct"/>
+             <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+          <record id="rule_my_tickits_user" model="ir.rule">
+             <field name="name">My tickits</field>
+             <field name="model_id" ref="help_desk_esraa_ahmed.model_hd_ticket"/>
+             <field name="global" eval="True"/>
+             <field name="domain_force">[('user_id','=',user.id)]</field>
+             <field name="groups" eval="[(4, ref('help_desk_esraa_ahmed.group_my_tickit_user'))]"/>
+        </record>
+    </data>
+</odoo>
