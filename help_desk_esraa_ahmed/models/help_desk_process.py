@@ -49,12 +49,8 @@ class HdTickit(models.Model):
             raise Warning(_("You are trying to delete a record that is not draft!"))
         return res
 
-    # def write(self, vals):
-    #     res = super(HdTickit, self).write(vals)
-    #     if any(state == 'solved' for state in set(self.mapped('state'))):
-    #         raise UserError(_("No edit in solved state"))
-    #     else:
-    #         return res
+
+   
 
     def set_to_in_progress(self):
         self.state = 'in_progress'

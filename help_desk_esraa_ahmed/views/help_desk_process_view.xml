@@ -67,15 +67,7 @@
                         <button name="set_to_draft" string="Set To Draft" type="object" attrs="{'invisible': [('state', 'not in', ['solved'])]}"/>
                       <field name="state" widget="statusbar" options="{'clickable': '0'}"/>
                     </header>
-<!--                        <button name="freight_company_detail" string="Freight Company Details" type="object" class="oe_highlight" states="draft"/>-->
-<!--                        <button name="shipment_document_follow_up" string="Shipment Document follow up" type="object" class="oe_highlight" states="freighting_supplier"/>-->
                     <sheet>
-<!--                        <div class="oe_title">-->
-<!--                            <label for="name"/>-->
-<!--                                <h1>-->
-<!--                                    <field name="name" attrs="{'required': [('state', 'in', ['finalize'])], 'readonly': [('state', 'in', ['done','cancel'])]}"/>-->
-<!--                                </h1>-->
-<!--                        </div>-->
                         <group>
                             <group>
                                 <field name="name"/>
